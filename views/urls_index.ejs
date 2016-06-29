@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <!-- Write EJS code here to display shortened links -->
+  <header>
+    <% include ./partials/_header.js %>
+  </header>
+    <% for (shortUrl in urls) { %>
+      <ul><li><a href= '<%= urls[shortUrl]%>'> <%= shortUrl %></a></li></ul>
+    <% } %>
+</body>
+</html>

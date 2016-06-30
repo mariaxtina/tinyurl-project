@@ -15,7 +15,7 @@ function requestHandler(request, response) {
   }
 }
 
-function generateRandomShortUrl() {
+function generateRandomShortURL() {
   var results = " ";
   var possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -25,10 +25,4 @@ function generateRandomShortUrl() {
   return results;
 }
 
-// generateRandomShortUrl(6);
-
-var server = http.createServer(requestHandler);
-
-server.listen(PORT, () => {
-  console.log(`Server listening on: http://localhost:${PORT}`);
-});
+module.exports = generateRandomShortURL;

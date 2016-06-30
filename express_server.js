@@ -32,13 +32,13 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
-app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
-});
-
 app.get("/urls/:id", (req, res) => {
   let templateVars = { shortURL: req.params.id, urls: urlDatabase};
   res.render("urls_show", templateVars);
+});
+
+app.get("/urls/new", (req, res) => {
+  res.render("urls_new");
 });
 
 
@@ -47,6 +47,11 @@ app.post("/urls", (req, res) => {
   //console.log(urlDatabase);  // debug statement to see POST parameters
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
+
+// app.get("/u/:shortURL", (req, res) => {
+//   let longURL =  req.body.longURL;
+//   res.redirect(longURL);
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

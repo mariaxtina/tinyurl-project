@@ -1,3 +1,5 @@
+"use strict";
+
 const http = require("http");
 const PORT = 8080;
 
@@ -12,6 +14,18 @@ function requestHandler(request, response) {
     response.end("Unknown Path");
   }
 }
+
+function generateRandomShortUrl() {
+  var results = " ";
+  var possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i <= 5; i++) {
+    results += possibilities.charAt(Math.floor(Math.random() *  possibilities.length));
+  }
+  return results;
+}
+
+// generateRandomShortUrl(6);
 
 var server = http.createServer(requestHandler);
 

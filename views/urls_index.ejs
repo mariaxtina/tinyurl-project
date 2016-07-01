@@ -6,7 +6,23 @@
     <% include ./partials/_header.js %>
   </header>
     <% for (shortUrl in urls) { %>
-      <ul><li><a href= '/urls/<%=[shortUrl] %>'> <%= shortUrl %></a></li></ul>
+      <ul><li><a href= '/urls/<%=[shortUrl] %>'> <%= shortUrl %></a></li>
+      <br>
+      <a href= '/urls/<%=[shortUrl] %>'> <%= urls[shortUrl] %></a>
+      <br>
+        <br>
+        <form method="POST" action="/urls/<%= shortUrl%>?_method=GET">
+          <button type="submit">Update TinyUrl</button>
+        </form>
+        <br>
+        <form method="POST" action="/urls/<%= shortUrl%>?_method=DELETE">
+          <button type="submit">Delete TinyUrl</button>
+        </form>
+      </ul>
     <% } %>
+    <p>
+
+    </p>
+
 </body>
 </html>

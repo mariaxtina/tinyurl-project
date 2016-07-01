@@ -2,6 +2,14 @@
 <html lang="en">
   <head></head>
   <body >
-  <a href= '<%= urls[shortURL]%>'> <%=urls[shortURL]%> </a>
+    <br>
+    <form method="POST" action="/urls/<%= shortURL%>?_method=PUT">
+      <input value="<%=urls[shortURL]%>" name='longURL'>
+      <br>
+        <a href= '<%= urls[shortURL]%>'> <%=urls[shortURL]%> </a>
+      </input>
+      <br>
+      <button type="submit">Change Original URL</button>
+    </form>
   </body>
 </html>

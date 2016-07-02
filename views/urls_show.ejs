@@ -4,9 +4,9 @@
   <body >
     <br>
     <form method="POST" action="/urls/<%= shortURL%>?_method=PUT">
-      <input value="<%=urls[shortURL]%>" name='longURL'>
+      <input value="<%=longURL%>" name='longURL'>
       <br>
-        <a href= '<%= urls[shortURL]%>'> <%=urls[shortURL]%> </a>
+        <a href= '<%=longURL%>'> <%=longURL%> </a>
       </input>
       <br>
       <button type="submit">Change Original URL</button>

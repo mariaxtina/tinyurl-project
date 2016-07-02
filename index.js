@@ -1,9 +1,22 @@
 var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 8080; // default port 8080
-var generateRandomShortURL = require('./app.js');
+var generateRandomShortURL = require('./generateRandomShortURL.js');
 var connect        = require('connect');
 var methodOverride = require('method-override');
+const MongoClient = require("mongodb").MongoClient;
+const MONGODB_URI = "mongodb://127.0.0.1:27017/tinyurl-project";
+
+let dbInstance;
+
+MongoClient.connect(MONGODB_URI, (err, db) => {
+  if (err) {
+    throw err;
+  }
+  console.log(`Successfully connected to DB: ${MONGODB_URI}`);
+  dbInstance = db;
+
+});
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded());
@@ -13,20 +26,20 @@ app.use(methodOverride('_method'));
 
 app.set("view engine", "ejs");
 
-var urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
+// var urlDatabase = {
+//   "b2xVn2": "http://www.lighthouselabs.ca",
+//   "9sm5xK": "http://www.google.com"
+// };
 
-function getLongURL(db, shortURL, cb) {
-  let query = { "shortURL": shortURL };
-  db.collection("urls").findOne(query, (err, result) => {
-    if (err) {
-      return cb(err);
-    }
-    return cb(null, result.longURL);
-  });
-}
+// function getLongURL(db, shortURL, cb) {
+//   let query = { "shortURL": shortURL };
+//   db.collection("urls").findOne(query, (err, result) => {
+//     if (err) {
+//       return cb(err);
+//     }
+//     return cb(null, result.longURL);
+//   });
+// }
 
 app.get("/", (req, res) => {
   res.end("Hello!");
@@ -36,44 +49,51 @@ app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
 
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
-});
+// //need to update function
+// app.get("/urls.json", (req, res) => {
+//   res.json(urlDatabase);
+// });
 
 app.get("/hello", (req, res) => {
   res.end("<html><body>Hello <b>World</b></body></html>\n");
 });
 
+//need to update function
 app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase };
-  res.render("urls_index", templateVars);
-
+  dbInstance.collection("urls").find().toArray((err, results) => {
+    let urlCollection = {urls: results};
+    res.render("urls_index", urlCollection);
+  });
 });
 
 app.get("/urls/:id", (req, res) => {
   let shortURL = req.params.id;
-  getLongURL(dbInstance, shortURL, (err, longURL) => {
-    console.log(longURL);
-    // the longURL available in a callback function
+  dbInstance.collection("urls").findOne({shortURL: shortURL}, (err, result) => {
+    console.log(result);
+    let templateVars = result;
+    res.render("urls_show", templateVars);
   });
 });
 
 app.delete("/urls/:id", (req, res) => {
-  delete urlDatabase[req.params.id];
-  res.redirect("/urls");
+  let shortURL = req.params.id;
+  dbInstance.collection("urls").deleteOne({shortURL: shortURL}, (err, result) => {
+    res.redirect("/urls");
+  });
 });
 
 app.put("/urls/:id", (req, res) => {
-  urlDatabase[req.params.id] = req.body.longURL;
-  console.log(urlDatabase);
-  res.redirect("/urls");
+  dbInstance.collection("urls").findOneAndUpdate({shortURL: req.params.id}, {$set: {longURL: req.body.longURL}}, (err,result) => {
+    res.redirect("/urls");
+  });
 });
 
+//need to update function
 app.post("/urls", (req, res) => {
-  urlDatabase[generateRandomShortURL(6)] = req.body.longURL;   // we learned that body == {}
-  console.log(urlDatabase);
-  res.send("Refresh to see your new tinyUrl.");         // Respond with 'Ok' (we will replace this)
-  //res.redirect("/messages");
+  dbInstance.collection("urls").insertOne({shortURL: generateRandomShortURL(6), longURL: req.body.longURL },
+  (err, result) => {
+    res.send("Refresh to see your new tinyUrl.");
+  });
 });
 
 app.listen(PORT, () => {

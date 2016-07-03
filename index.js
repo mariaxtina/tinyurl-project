@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 8080; // default port 8080
@@ -6,7 +7,8 @@ var generateRandomShortURL = require('./generateRandomShortURL.js');
 var connect        = require('connect');
 var methodOverride = require('method-override');
 const MongoClient = require("mongodb").MongoClient;
-const MONGODB_URI = "mongodb://127.0.0.1:27017/tinyurl-project";
+const MONGODB_URI = "process.env.MONGODB_URI";
+
 
 let dbInstance;
 

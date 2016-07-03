@@ -1,9 +1,10 @@
 {
   "name": "tinyurl-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "TinyApp: A URL-shortener - LHL Project",
+  "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,9 @@
     "connect": "^3.4.1"
   },
   "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "method-override": "^2.3.6",

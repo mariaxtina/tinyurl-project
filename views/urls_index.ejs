@@ -10,19 +10,15 @@
       <br>
       <a href= '/urls/<%=url.longURL %>'> <%= url.longURL %></a>
       <br>
-        <br>
-        <form method="POST" action="/urls/<%= url.shortURL%>?_method=GET">
-          <button type="submit">Update TinyUrl</button>
-        </form>
-        <br>
+      <br>
+      <form method="POST" action="/urls/<%= url.shortURL%>?_method=GET">
+        <button type="submit">Update TinyUrl</button>
+      </form>
+      <br>
         <form method="POST" action="/urls/<%= url.shortURL%>?_method=DELETE">
           <button type="submit">Delete TinyUrl</button>
         </form>
       </ul>
     <% } %>
-    <p>
-
-    </p>
-
 </body>
 </html>

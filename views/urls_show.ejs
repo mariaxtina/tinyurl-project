@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head></head>
-  <body >
+  <head>
+    <title>Showing <%= shortURL %></title>
+  </head>
+  <body>
     <br>
-    <form method="POST" action="/urls/<%= shortURL%>?_method=PUT">
-      <input value="<%=longURL%>" name='longURL'>
+    <form method="POST" action="/urls/<%= shortURL %>?_method=PUT">
+      <input value="<%= longURL %>" name='longURL'>
       <br>
-        <a href= '<%=longURL%>'> <%=longURL%> </a>
-      </input>
+      <a href= '<%= longURL %>'><%= longURL %></a>
       <br>
       <button type="submit">Change Original URL</button>
     </form>

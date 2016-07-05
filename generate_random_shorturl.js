@@ -1,5 +1,5 @@
 function generateRandomShortURL() {
-  let results = " ";
+  let results = "";
   let possibilities = "abcdefghijklmnopqrstuvwxyz0123456789";
 
   for (let i = 0; i <= 5; i++) {

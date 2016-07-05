@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <!-- Write EJS code here to display shortened links -->
   <header>
     <% include ./partials/_header.js %>
   </header>
-    <% for (url of urls) { %>
-      <ul><li><a href= '/urls/<%=url.shortURL %>'> <%= url.shortURL %></a></li>
-      <br>
-      <a href= '/urls/<%=url.longURL %>'> <%= url.longURL %></a>
-      <br>
-      <br>
-      <form method="POST" action="/urls/<%= url.shortURL%>?_method=GET">
-        <button type="submit">Update TinyUrl</button>
-      </form>
-      <br>
-        <form method="POST" action="/urls/<%= url.shortURL%>?_method=DELETE">
+  <h3><a href="/urls/new"> Create a new TinyUrl</a></h3>
+  <% for (url of urls) { %>
+    <ul>
+      <li>
+        <a href='/urls/<%= url.shortURL %>'><%= url.shortURL %></a>
+        <br>
+        <a href='/urls/<%= url.longURL %>'><%= url.longURL %></a>
+        <br>
+        <br>
+        <form method="POST" action="/urls/<%= url.shortURL %>?_method=GET">
+          <button type="submit">Edit TinyUrl</button>
+        </form>
+        <br>
+        <form method="POST" action="/urls/<%= url.shortURL %>?_method=DELETE">
           <button type="submit">Delete TinyUrl</button>
         </form>
-      </ul>
-    <% } %>
+      </li>
+    </ul>
+  <% } %>
 </body>
 </html>

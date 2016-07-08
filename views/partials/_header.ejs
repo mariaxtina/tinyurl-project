@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+  </head>
+  <body>
+  <h1>Tiny URLs are Useful</h1>
+    <% if (username) { %>
+      <form action="/logout" method="POST">
+      <h4> <%= username %></h4>
+      <input type="submit" value="Logout">
+    <% } else { %>
+      <form action="/login" method="POST">
+        <input type="text" name="username">
+        <input type="submit" value="Login">
+  </form>
+  <% } %>
+ </body>
+</html>
+
